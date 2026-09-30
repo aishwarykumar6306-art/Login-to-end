@@ -1,0 +1,20 @@
+-- Migration: Create users table
+-- Role: ADMIN, MODERATOR, EMPLOYEE
+-- Status: ACTIVE, SUSPENDED, DISABLED
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('ADMIN', 'MODERATOR', 'EMPLOYEE') NOT NULL DEFAULT 'EMPLOYEE',
+    status ENUM('ACTIVE', 'SUSPENDED', 'DISABLED') NOT NULL DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL DEFAULT NULL,
+
+    INDEX idx_email (email),
+    INDEX idx_role (role),
+    INDEX idx_status (status),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
